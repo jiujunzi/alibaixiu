@@ -1,0 +1,68 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <title>Sign in &laquo; Admin</title>
+  <link rel="stylesheet" href="../assets/vendors/bootstrap/css/bootstrap.css">
+  <link rel="stylesheet" href="../assets/css/admin.css">
+</head>
+<body>
+  <div class="login">
+    <div class="login-wrap">
+      <img class="avatar" src="../assets/img/default.png">
+      <!-- 有错误信息时展示 -->
+      <!-- <div class="alert alert-danger">
+        <strong>错误！</strong> 用户名或密码错误！
+      </div> -->
+      <div class="form-group">
+        <label for="email" class="sr-only">邮箱</label>
+        <input id="email" type="email" class="form-control" placeholder="邮箱" autofocus>
+      </div>
+      <div class="form-group">
+        <label for="password" class="sr-only">密码</label>
+        <input id="password" type="password" class="form-control" placeholder="密码">
+      </div>
+      <button class="btn btn-primary btn-block" id="loginBtn">登 录</button>
+    </div>
+  </div>
+  <script src="../assets/vendors/jquery/jquery.min.js"></script>
+
+  <script type="text/javascript">
+  //选择登录钮并为其添加点击事件
+    $('#loginBtn').on('click',function(){
+      var email = $('#email').val();
+      var password = $('#password').val()
+      console.log(email,password);
+      //校验合法性，如果不合法就阻止往下执行
+      if(email.trim() == '') {
+        alert('邮箱不能为空');
+        return;
+      } 
+      if(password.trim() =='') {
+        alert('密码不能为空');
+        return;
+      }
+
+
+      //第二部、ajax登录
+      $.ajax({
+        type:'post',//get或post
+        url:'/login',//请求的地址
+        data:{email,password},//如果不需要传，则注释掉 请求的参数，a=1&b=2或{a:1,b:2}或者jq中的serialize方法，或者formData收集
+        dataType:'json',
+        success:function(result){//成功的回调函数
+         //登录成功
+         location.href = 'index.html'
+        },
+        //登录失败
+        error:function(){
+          alert('用户名或密码错误')
+        }
+      })
+    })
+  
+  </script>
+</body>
+</html>
